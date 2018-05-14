@@ -5,6 +5,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import Animate from 'react-simple-animate';
 import { SPComponentLoader } from '@microsoft/sp-loader';
 import { CommandButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
+import { GridForm, Fieldset, Row, Field } from 'react-gridforms'
 
 export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
 
@@ -16,9 +17,9 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
       SiteUrl: "",
       PassportRequest: 0,
       LeaveRequest: 0,
+      FormIsEnabled: 0,
     }
     SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
-
   }
 
 
@@ -62,12 +63,14 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
           </div>
         </div>
 
-         <div className={styles.Users}>
+        <div className={styles.Users}>
           <div className={styles.HeaderUsers} ></div>
           <div>
             <p className={styles.pragraph}> User Creation Request </p>
           </div>
         </div>
+      
+
 
       </div>
     );

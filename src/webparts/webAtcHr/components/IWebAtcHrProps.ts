@@ -3,5 +3,6 @@ export interface IWebAtcHrProps {
   SiteUrl:string;
   PassportRequest:number;
   LeaveRequest:number;
+  FormIsEnabled:number;
   
 }
