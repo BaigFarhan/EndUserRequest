@@ -62,6 +62,13 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
           </div>
         </div>
 
+         <div className={styles.Users}>
+          <div className={styles.HeaderUsers} ></div>
+          <div>
+            <p className={styles.pragraph}> User Creation Request </p>
+          </div>
+        </div>
+
       </div>
     );
   }
