@@ -287,7 +287,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 </Row>
                 <Row>
                 <Field span={3}>
-                  <button id="btn_add" className={styles.button} onClick={this.CreateNewItem.bind(this)}>Submit </button>
+                  <button id="btn_add" className={styles.MainButton} onClick={this.CreateNewItem.bind(this)}>Try Submit </button>
 
                   </Field>
                 </Row>
