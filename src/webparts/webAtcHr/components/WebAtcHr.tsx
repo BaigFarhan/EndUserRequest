@@ -106,7 +106,11 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
   public CreateNewItem(event: any): void {
   }
 
-  
+  public CloseGrid(event :any):void{
+    this.setState({
+      FormIsEnabled: 0
+    });
+  }
 
 
 
@@ -163,19 +167,20 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     }
   }
 
-
-
   public render(): React.ReactElement<IWebAtcHrProps> {
     return (
-      <div className={styles.webAtcHr} >
+      
+      <div className={styles.webAtcHr} >      
+      {
+        this.state.FormIsEnabled == 0 &&
+        <div>
         <div className={styles.containerLeave} onClick={this.DivSelected.bind(this, 1)}>
-          <div className={styles.HeaderPassport} ></div>
-          <div>
-            <p className={styles.pragraph}> Leave Request </p>
-          </div>
+        <div className={styles.HeaderPassport} ></div>
+        <div>
+          <p className={styles.pragraph}> Leave Request </p>
         </div>
-
-        <div className={styles.Passport} onClick={this.DivSelected.bind(this, 2)}>
+      </div>
+      <div className={styles.Passport} onClick={this.DivSelected.bind(this, 2)}>
           <div className={styles.HeaderDivLeave} ></div>
           <div>
             <p className={styles.pragraph}> Passport Request </p>
@@ -210,10 +215,21 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
           </div>
         </div>
 
+
+</div>
+      }
+
+       
+
+     
         {this.state.FormIsEnabled == 1 &&
           <div className={styles.HeaderGrid}>
+           <div className={styles.CloseButton}>
+              <button id="btn_add" className={styles.MyButton} onClick={this.CloseGrid.bind(this)}>Close </button>
+              </div>
             <GridForm>
-              <Fieldset legend={this.state.RequestTypeString}>
+           
+              <Fieldset legend={this.state.RequestTypeString}>          
                 <Row>
                   <Field span={3}>
                     <label>Employee Name</label>
@@ -229,7 +245,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
           </div>
         }
 
-          {this.state.LeaveRequest == 1 &&
+          {this.state.LeaveRequest == 1 && this.state.FormIsEnabled == 1 &&
           <div className={styles.HeaderGrid}>
             <GridForm>
                 <Row>
@@ -237,7 +253,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                     <label>From Date</label>
                     <Datetime onChange={this.onSelectDateFrom.bind(this)} />
                 </Field>
-                  <Field>
+                <Field span={2}>
                     <label>To Date</label>
                     <Datetime onChange={this.onSelectDateTo.bind(this)} />
                 </Field>
@@ -254,7 +270,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
         }
 
           {this.state.FormIsEnabled == 1 &&
-          <div className={styles.FooterGrid}>
+          <div className={styles.HeaderGrid}>
             <GridForm>
                <Row>
                 <Field span={3}>

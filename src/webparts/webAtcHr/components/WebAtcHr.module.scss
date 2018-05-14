@@ -115,6 +115,19 @@
     background: #53a7ea;
   }
 
+  .CloseButton{
+    text-align: right;
+  }
+
+  .MyButton{
+    display: table-cell;
+    vertical-align: middle;
+    cursor: pointer;
+    width: 75px;
+    height: 75px;
+    border: 4px solid #00A2FF;
+    border-radius: 50%;
+  }
 
   .Sick {
     margin: 9px;
