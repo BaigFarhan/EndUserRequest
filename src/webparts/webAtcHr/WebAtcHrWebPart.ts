@@ -10,18 +10,20 @@ import {
 import * as strings from 'WebAtcHrWebPartStrings';
 import WebAtcHr from './components/WebAtcHr';
 import { IWebAtcHrProps } from './components/IWebAtcHrProps';
+import { SPHttpClient } from '@microsoft/sp-http';
 
-export interface IWebAtcHrWebPartProps {
-  description: string;
-}
 
-export default class WebAtcHrWebPart extends BaseClientSideWebPart<IWebAtcHrWebPartProps> {
+
+export default class WebAtcHrWebPart extends BaseClientSideWebPart<IWebAtcHrProps> {
 
   public render(): void {
     const element: React.ReactElement<IWebAtcHrProps > = React.createElement(
       WebAtcHr,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        siteUrl:this.context.pageContext.web.absoluteUrl,
+        spHttpClient:this.context.spHttpClient,
+
       }
     );
 
