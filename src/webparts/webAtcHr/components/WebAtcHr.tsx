@@ -8,6 +8,7 @@ import { CommandButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { GridForm, Fieldset, Row, Field } from 'react-gridforms'
 import * as Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
+import * as jquery from 'jquery';
 
 import {
   CompactPeoplePicker,
@@ -32,7 +33,6 @@ import {
 } from '@microsoft/sp-core-library';
 import { Promise } from 'es6-promise';
 import * as lodash from 'lodash';
-//import * as jquery from 'jquery';
 import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.Props';
 import { IOfficeUiFabricPeoplePickerProps } from './IOfficeUiFabricPeoplePickerProps';
 import { people } from './PeoplePickerExampleData';
@@ -110,6 +110,30 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     this.setState({
       FormIsEnabled: 0
     });
+  }
+
+
+  private GetUSerDetails() {
+    var reactHandler = this;
+    var NewISiteUrl = this.props.siteUrl;
+    var NewSiteUrl = NewISiteUrl.replace("/SitePages", "");
+    var reqUrl = NewSiteUrl + "/_api/sp.userprofiles.peoplemanager/GetMyProperties";
+    jquery.ajax(
+      {
+        url: reqUrl, type: "GET", headers:
+          {
+            "accept": "application/json;odata=verbose"
+          }
+      }).then((response) => {
+        //console.log(response.data);
+        var Name = response.d.DisplayName;
+        var email = response.d.Email;
+        var oneUrl = response.d.PersonalUrl;
+        var imgUrl = response.d.PictureUrl;
+        var jobTitle = response.d.Title;
+        var profUrl = response.d.UserUrl;
+      })
+      ;
   }
 
 
