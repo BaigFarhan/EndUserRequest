@@ -25,7 +25,7 @@
 .HeaderAllownce{
   background-image: url('http://under30ceo.com/wp-content/uploads/2010/10/home-office-2-582x379.jpg');
   background-size: 100%;
-  height: 80px;
+  height: 95px;
 }
 
 .Allowance:hover {
@@ -43,6 +43,8 @@
     float: left;
     box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    height: 130px;
+    width: 230px;
 }
 
   .containerLeave {
@@ -57,44 +59,70 @@
     float: left;
     box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    height: 130px;
+    width: 230px;
   }
   .containerLeave:hover {
     background: #53a7ea;
   }
 
   .pragraph{
-    font-size: 18px;
+    font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin:20px;
+    margin:6px;
+    margin-top: 3px;
   }
 
+  .CloseButton{
+    text-align: right;
+  }
+
+  .MyButton{
+    background-color: #36a9e0;
+    color: white;
+    font-size: 13px;
+    border: none;
+    padding: 5px;
+    float: left;
+    
+  }
+
+  .MainButton{
+    background-color: #36a9e0;
+    color: white;
+    font-size: 13px;
+    border: none;
+    padding: 5px;
+    float: left;
+    margin-right: 10px;
+  }
 
   .HeaderPassport{
     background-image: url('https://trott.house.gov/sites/trott.house.gov/files/styles/congress_featured_image/public/featured_image/office_location/Office-Door-1Small.jpg?itok=VkWcZOnr');
     background-size: 100%;
-    height: 80px;
+    height: 95px;
   }
   .HeaderSick{
     background-image: url('https://www.myledlightingguide.com/images/installations/Office.jpg');
     background-size: 100%;
-    height: 80px;
+    height: 95px;
   }
   .HeaderDivServerP{
     background-image: url('https://iseazy.com/blog/wp-content/uploads/2018/02/Tipos-de-contenidos-e-learning-que-generan-un-mayor-nivel-de-compromiso.jpg');
     background-size: 100%;
-    height: 80px;
+    height: 95px;
   }
 
   .HeaderDivLeave{
     background-image: url('https://www.knoll.com/images/main_right.jpg?v=051016');
     background-size: 100%;
-    height: 80px;    
+    height: 95px;    
 
   } 
   .HeaderDivServer{
     background-image: url('http://www.guoguiyan.com/data/out/79/68529846-free-office-wallpapers.jpg');
     background-size: 100%;
-    height: 80px;  
+    height: 95px; 
   }
 
   .Passport {
@@ -109,36 +137,14 @@
     float: left;
     box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    height: 130px;
+    width: 230px;
   }
 
   .Passport:hover {
     background: #53a7ea;
   }
 
-  .CloseButton{
-    text-align: right;
-  }
-
-  .MyButton{
-    display: table-cell;
-    vertical-align: middle;
-    cursor: pointer;
-    width: 75px;
-    height: 75px;
-    border: 4px solid #00A2FF;
-    border-radius: 50%;
-  }
-
-  .MainButton{
-    display: table-cell;
-    vertical-align: middle;
-    cursor: pointer;
-    width: 75px;
-    height: 75px;
-    border: 4px solid #00A2FF;
-    border-radius: 50%;
-    float: right;
-  }
 
   .Sick {
     margin: 9px;
@@ -152,6 +158,8 @@
     float: left;
     box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    height: 130px;
+    width: 230px;
   }
   .Sick:hover {
     background: #53a7ea;
@@ -170,6 +178,8 @@
     float: left;
     box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    height: 130px;
+    width: 230px;
   }
   .Server:hover {
     background: #53a7ea;
@@ -189,7 +199,7 @@
   .HeaderUsers{
     background-image: url('http://msofficeuser.com/pages/wp-content/uploads/2011/01/HelpHeader.png');
     background-size: 100%;
-    height: 80px;
+    height: 95px;
   }
   
   .Users:hover {
@@ -207,6 +217,8 @@
       float: left;
       box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
       cursor: pointer;
+      height: 130px;
+      width: 230px;
   }
 
   .row {

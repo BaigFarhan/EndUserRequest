@@ -121,6 +121,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
         this.setState({
           FormIsEnabled: 1,
           RequestTypeString: "Leave Request",
+          PassportRequest:0,
           LeaveRequest:1
         })
         break;
@@ -130,6 +131,8 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
           FormIsEnabled: 1,
           RequestTypeString: "Passport Request",
           PassportRequest:1,
+          LeaveRequest:0,
+
         })
         break;
 
@@ -224,9 +227,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
      
         {this.state.FormIsEnabled == 1 &&
           <div className={styles.HeaderGrid}>
-           <div className={styles.CloseButton}>
-              <button id="btn_add" className={styles.MyButton} onClick={this.CloseGrid.bind(this)}>Close </button>
-              </div>
+           
             <GridForm>
            
               <Fieldset legend={this.state.RequestTypeString}>          
@@ -269,6 +270,21 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
           </div>
         }
 
+ {this.state.PassportRequest == 1 && this.state.FormIsEnabled == 1 &&
+          <div className={styles.HeaderGrid}>
+            <GridForm>               
+                <Row>
+                  <Field span={4}>
+                    <label>Description</label>
+                    <input type="text" className={styles.myinput}  />
+                  </Field>
+                 
+                </Row>
+            </GridForm>
+          </div>
+        }
+
+
           {this.state.FormIsEnabled == 1 &&
           <div className={styles.HeaderGrid}>
             <GridForm>
@@ -287,8 +303,8 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 </Row>
                 <Row>
                 <Field span={3}>
-                  <button id="btn_add" className={styles.MainButton} onClick={this.CreateNewItem.bind(this)}>Try Submit </button>
-
+                  <button id="btn_add" className={styles.MainButton} onClick={this.CreateNewItem.bind(this)}>Submit </button>
+              <button id="btn_add" className={styles.MyButton} onClick={this.CloseGrid.bind(this)}>Close </button>
                   </Field>
                 </Row>
             </GridForm>
