@@ -20,5 +20,24 @@ export interface IWebAtcHrProps {
   numberOfItems: number;
   onChange?: (items: SharePointUserPersona[]) => void;
   siteUrl:string;
+  EmployeeName:string;
+  EmployeeNumber:string;
+  EmployeeManager:string;
+  EmployeeEmail:string;
+  EmpFirstName:string;
+  EmpLastName:string;
+  EmpNumber:string;
+  Description:string;
+  FromDate:string;
+  ToDate:string;
+  FromCity:string;
+  ToCity:string;
+  StorageCapaity:string;
+  LineManager:string;
+  ManagerHead:string;
+  Status:string;
+  Stage:string
+  EmpEmirates:string;
+  EmpPassportNumber:string;
   
 }

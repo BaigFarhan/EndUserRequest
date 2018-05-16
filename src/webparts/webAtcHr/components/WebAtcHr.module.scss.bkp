@@ -15,8 +15,6 @@
     text-emphasis: unset;
   }
 
-  
-  
   .HeaderGrid{
     float: left;
     width:100%;
@@ -49,8 +47,6 @@
     width: 230px;
 }
 
-
-// Leave Request Classes
   .containerLeave {
     margin: 9px;
     max-width: 700px;
@@ -64,379 +60,11 @@
     box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
     height: 130px;
-    position: relative;
-    width: 232px;
+    width: 230px;
   }
-   
-  .imageLeave {
-  
-    display: block;
-      width: 100%;
-      height: 116px;
-  }
-   
   .containerLeave:hover {
-    background:#53a7ea;
-  }
-
-  .overlayLeave {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
- 
-   width: 100%;
-    opacity: 0;
-    transition: .5s ease;
     background: #53a7ea;
- 
- }
- 
- .containerLeave:hover .overlayLeave {
-  opacity: 1;
-}
-
-.pragraphLeave {
-  color: white;
-  font-size: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
-// Passport Request Classes
- 
-.containerPassport {
-  margin: 9px;
-  max-width: 700px;
-  background: #f09609;
-  color: #fff;
-  font: 3.5em sans-serif;
-  text-align: center;
- transition: background-color 1s ease-in-out;
- 
-  padding: 7px;
-  float: left;
-  box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-
- cursor: pointer;
-  height: 130px;
-  position: relative;
-  width: 232px;
-}
- 
-
-.imagePassport {
-
-  display: block;
-  width: 100%;
-  height: 116px;
-   
-}
-
-
-.containerPassport:hover {
-  background:#53a7ea;
-}
-
-
-.overlayPassport {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background: #53a7ea;
-
-}
-
-
-.containerPassport:hover .overlayPassport {
-opacity: 1;
-}
-
-.pragraphPassport {
-color: white;
-font-size: 20px;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-text-align: center;
-
-}
-
-
-
-// Server Request Classes
- 
-.containerServer {
-  margin: 9px;
-  max-width: 700px;
-  background: #676470;
-  color: #fff;
-  font: 3.5em sans-serif;
-  text-align: center;
-  transition: background-color 1s ease-in-out;
-  padding: 7px;
-  float: left;
-  box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  height: 130px;
-  position: relative;
-  width: 232px;
-}
- 
-
-.imageServer {
-
-  display: block;
-  width: 100%;
-  height: 116px;
-   
-}
-
-
-.containerServer:hover {
-  background:#53a7ea;
-  
-}
-
-
-.overlayServer {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background: #53a7ea;
-
-}
-
-.containerServer:hover .overlayServer {
-opacity: 1;
-}
-
-.pragraphServer {
-color: white;
-font-size: 20px;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-text-align: center;
-
-}
-
-
-// Sick Request Classes
- 
-.containerSick {
-  margin: 9px;
-  max-width: 700px;
-  background: #a6a6a6;
-  color: #fff;
-  font: 3.5em sans-serif;
-  text-align: center;
-  transition: background-color 1s ease-in-out;
-  padding: 7px;
-  float: left;
-  box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  height: 130px;
-  position: relative;
-  width: 232px;
-}
- 
-
-.imageSick {
-
-  display: block;
-  width: 100%;
-  height: 116px;
-   
-}
-
-
-.containerSick:hover {
-  background:#53a7ea;
-}
-
-
-.overlaySick {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background: #53a7ea;
-
-}
-
-.containerSick:hover .overlaySick {
-opacity: 1;
-}
-
-.pragraphSick {
-color: white;
-font-size: 20px;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-text-align: center;
-
-}
-
-// Allowance Request Classes
- 
-.containerAllowance {
-  margin: 9px;
-  max-width: 700px;
-  background: #420005;
-  color: #fff;
-  font: 3.5em sans-serif;
-  text-align: center;
-  transition: background-color 1s ease-in-out;
-  padding: 7px;
-  float: left;
-  box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  height: 130px;
-  position: relative;
-  width: 232px;
-}
- 
-
-.imageAllowance {
-
-  display: block;
-  width: 100%;
-  height: 116px;
-   
-}
-
-
-.containerAllowance:hover {
-  background:#53a7ea;
-}
-
-
-.overlayAllowance {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background: #53a7ea;
-
-}
-
-
-.containerAllowance:hover .overlayAllowance {
-opacity: 1;
-}
-
-.pragraphAllowance {
-color: white;
-font-size: 20px;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-text-align: center;
-
-}
-// User Request Classes
- 
-.containerUser {
-  margin: 9px;
-  max-width: 700px;
-  background: #064287;
-  color: #fff;
-  font: 3.5em sans-serif;
-  text-align: center;
-  transition: background-color 1s ease-in-out;
-  padding: 7px;
-  float: left;
-  box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  height: 130px;
-  position: relative;
-  width: 232px;
-}
- 
-
-.imageUser {
-
-  display: block;
-  width: 100%;
-  height: 116px;
-   
-}
-
-
-.containerUser:hover {
-  background:#53a7ea;
-}
-
-
-.overlayUser {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background: #53a7ea;
-
-}
-
-
-.containerUser:hover .overlayUser {
-opacity: 1;
-}
-
-.pragraphUser {
-color: white;
-font-size: 20px;
-position: absolute;
-top: 50%;
-
-left: 50%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-text-align: center;
-
-}
-
+  }
 
   .pragraph{
     font-size: 15px;
@@ -445,9 +73,31 @@ text-align: center;
     margin-top: 3px;
   }
 
+  .CloseButton{
+    text-align: right;
+  }
+
+  .MyButton{
+    background-color: #36a9e0;
+    color: white;
+    font-size: 13px;
+    border: none;
+    padding: 5px;
+    float: left;
+    
+  }
+
+  .MainButton{
+    background-color: #36a9e0;
+    color: white;
+    font-size: 13px;
+    border: none;
+    padding: 5px;
+    float: left;
+    margin-right: 10px;
+  }
 
   .HeaderPassport{
-
     background-image: url('https://trott.house.gov/sites/trott.house.gov/files/styles/congress_featured_image/public/featured_image/office_location/Office-Door-1Small.jpg?itok=VkWcZOnr');
     background-size: 100%;
     height: 95px;
@@ -601,32 +251,6 @@ text-align: center;
     @include ms-fontColor-white;
   }
 
-  .CloseButton{
-    text-align: right;
-  }
-
-  .MyButton{
-    background-color: #36a9e0;
-    color: white;
-    font-size: 13px;
-    border: none;
-    padding: 5px;
-    float: left;
-    
-  }
-
-  .MainButton{
-    background-color: #36a9e0;
-    color: white;
-    font-size: 13px;
-    border: none;
-    padding: 5px;
-    float: left;
-    margin-right: 10px;
-  }
-
-  
-
   .button {
     // Our button
     text-decoration: none;
@@ -661,5 +285,4 @@ text-align: center;
       display: inline-block;
     }
   }
-
 }
