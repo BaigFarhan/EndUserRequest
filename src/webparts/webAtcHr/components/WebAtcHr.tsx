@@ -371,8 +371,10 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                             </Row>
                             <Row>
                                 <Field span={3}>
+                                <div className={styles.FooterButtonDiv}>
                                     <button id="btn_add" className={styles.MainButton} onClick={this.CreateNewItem.bind(this)}>Create Request </button>
                                     <button id="btn_add" className={styles.MyButton} onClick={this.CloseGrid.bind(this)}>Close </button>
+                                    </div>
                                 </Field>
                             </Row>
                     </div>
