@@ -8,7 +8,7 @@ import { CommandButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { GridForm, Fieldset, Row, Field } from 'react-gridforms'
 import * as Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
-import pnp from "sp-pnp-js";
+import { default as pnp, ItemAddResult } from "sp-pnp-js";
 
 import {
     CompactPeoplePicker,
@@ -74,80 +74,90 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     constructor(props, context) {
         super(props);
         this.state = {
+            DetailComments: "",
             description: "",
             PassportRequest: 0,
             LeaveRequest: 0,
             FormIsEnabled: 0,
             RequestTypeString: "",
             spHttpClient: this.props.spHttpClient,
-            siteUrl: "https://arabtec.sharepoint.com/sites/dev/LMS",
+            siteUrl: "https://arabtec.sharepoint.com",
             currentPicker: 1,
             delayResults: true,
             selectedItems: [],
             descriptionpicker: "",
-            siteUrlpicker: "https://arabtec.sharepoint.com/sites/dev/LMS",
+            siteUrlpicker: "https://arabtec.sharepoint.com",
             typePicker: "",
             principalTypeUser: true,
             principalTypeSharePointGroup: true,
             principalTypeSecurityGroup: true,
             principalTypeDistributionList: true,
             numberOfItems: 5,
-            EmployeeName: "",
-            EmployeeNumber: "",
-            EmployeeManager: "",
-            EmployeeEmail: "",
-            EmpFirstName: "",
-            EmpLastName: "",
-            EmpNumber: "",
-            Description: "",
-            FromDate: "",
-            ToDate: "",
-            FromCity: "",
-            ToCity: "",
-            StorageCapaity: "",
+            EmployeeName: "NA",
+            EmployeeNumber: "NA",
+            EmployeeManager: "NA",
+            EmployeeEmail: "NA",
+            EmpFirstName: "NA",
+            EmpLastName: "NA",
+            EmpNumber: "NA",
+            Description: "NA",
+            FromDate: "NA",
+            ToDate: "NA",
+            FromCity: "NA",
+            ToCity: "NA",
+            StorageCapaity: "NA",
             LineManager: "",
             ManagerHead: "",
             Status: "",
             Stage: "",
-            EmpEmirates: "",
-            EmpPassportNumber: "",
+            EmpEmirates: "NA",
+            EmpPassportNumber: "NA",
 
         }
         SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
     }
 
     public onSelectDateFrom(event: any): void {
-        //this.setState({ fromdt: event._d });
+        this.setState({ FromDate: event._d });
     }
     public onSelectDateTo(event: any): void {
-        // this.setState({ todt: event._d });
+        this.setState({ ToDate: event._d });
+    }
+
+    public updateitems() {
+
+        let list = pnp.sp.web.lists.getByTitle("Human Resource");
+        list.items.getById(7).update({
+            Title: "My New Title44444",
+            Description: "Here is a new description",
+            LineManagerId: "1946"
+        }).then(i => {
+            console.log(i);
+        });
     }
 
     public CreateNewItem(event: any): void {
-        
         var dateFormat = require('dateformat');
-        //var FinalDate = dateFormat(this.state.RequiredDate, "m/dd/yyyy");
         var NewISiteUrl = this.props.siteUrl;
         var NewSiteUrl = NewISiteUrl.replace("/SitePages", "");
-
         pnp.sp.web.lists.getByTitle("Human Resource").items.add({
-            Title: "My Item Title"
+            Title: "My Item Title",
+            FromDate: this.state.FromDate,
+            ToDate: this.state.ToDate,
+            FromCity: this.state.FromCity,
+            ToCity: this.state.ToCity,
+            EmpFirstName: this.state.EmployeeName,
+            EmpLastName: this.state.EmployeeName,
+            EmpNumber: this.state.EmployeeNumber,
+            ItemsComments: this.state.DetailComments,
+            StorageCapaity: this.state.StorageCapaity,
+            Status: "Pending",
+            Stage: "Line Manager",
+            EmpPassportNumber: this.state.EmpPassportNumber,
+            LineManagerId: this.state.selectedItems[0]["_user"]["Id"].toString(),
+            LineManagerEmail: this.state.selectedItems[0]["_user"]["Email"],
         }).then(r => {
-            console.log(r);
-            //r.item.attachmentFiles.add("file.txt", "Here is some file content.");
         });
-        
-       // let webx = new Web(NewSiteUrl);
-       // webx.lists.getByTitle("RFI").items.add({
-         // Title: this.state.ItemGuid,
-         // Main_x0020_Comments: this.refs.RefComments["innerHTML"],
-         // RFI_x0020_Subject: this.state.Subject,
-         // Building: this.state.Building,
-         // Date: FinalDate,
-       // }).then((iar: ItemAddResult) => {
-         // let CurUser = iar.data["AuthorId"];
-         // this.UpdateSeriesItemIRFI(iar.data["Id"]);
-       // });
     }
 
     public CloseGrid(event: any): void {
@@ -156,9 +166,26 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
         });
     }
 
+    public OnChangeDescription(event: any): void {
+        this.setState({
+            DetailComments: event.target.value
+        });
+    }
+
     componentDidMount() {
         this.GetUSerDetails();
+        this.readUrl();
+
     }
+    /* Edit Page Dtails ----------------------------------------------- START     */
+    public readUrl()
+    {
+    var url = window.location.href;
+    var id = url.substring(url.lastIndexOf('=') + 1);
+    alert(id);
+        
+    }
+    /* Edit Page Dtails ----------------------------------------------- END     */
 
     private GetUSerDetails() {
         var reactHandler = this;
@@ -172,7 +199,6 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                         "accept": "application/json;odata=verbose"
                     }
             }).then((response) => {
-                //console.log(response.data);
                 var Name = response.d.DisplayName;
                 var email = response.d.Email;
                 var oneUrl = response.d.PersonalUrl;
@@ -189,6 +215,8 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 });
             });
     }
+
+
 
 
 
@@ -331,7 +359,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                             <Row>
                                 <Field span={4}>
                                     <label>Description</label>
-                                    <input type="text" className={styles.myinput} />
+                                    <input type="text" className={styles.myinput} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
                                 </Field>
 
                             </Row>
@@ -345,7 +373,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                             <Row>
                                 <Field span={4}>
                                     <label>Description</label>
-                                    <input type="text" className={styles.myinput} />
+                                    <input type="text" className={styles.myinput} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
                                 </Field>
 
                             </Row>
@@ -356,27 +384,29 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
 
                 {this.state.FormIsEnabled == 1 &&
                     <div className={styles.HeaderGrid}>
-                            <Row>
-                                <Field span={3}>
-                                    <label>Manager-To-Approval</label>
-                                    <NormalPeoplePicker
-                                        onChange={this._onChange.bind(this)}
-                                        onResolveSuggestions={this._onFilterChanged}
-                                        getTextFromItem={(persona: IPersonaProps) => persona.primaryText}
-                                        pickerSuggestionsProps={suggestionProps}
-                                        className={'ms-PeoplePicker'}
-                                        key={'normal'}
-                                    />
-                                </Field>
-                            </Row>
-                            <Row>
-                                <Field span={3}>
+                        <Row>
+                            <Field span={3}>
+                                <label>Manager-To-Approval</label>
+                                <NormalPeoplePicker
+                                    onChange={this._onChange.bind(this)}
+                                    onResolveSuggestions={this._onFilterChanged}
+                                    getTextFromItem={(persona: IPersonaProps) => persona.primaryText}
+                                    pickerSuggestionsProps={suggestionProps}
+                                    className={'ms-PeoplePicker'}
+                                    key={'normal'}
+                                />
+                            </Field>
+                        </Row>
+                        <Row>
+                            <Field span={3}>
                                 <div className={styles.FooterButtonDiv}>
-                                    <button id="btn_add" className={styles.MainButton} onClick={this.CreateNewItem.bind(this)}>Create Request </button>
-                                    <button id="btn_add" className={styles.MyButton} onClick={this.CloseGrid.bind(this)}>Close </button>
-                                    </div>
-                                </Field>
-                            </Row>
+                                    <button id="btn_add" className={'btn btn-primary'} onClick={this.CreateNewItem.bind(this)}>Create Request </button>
+                                    &nbsp;
+                                    <button id="btn_add" className={'btn btn-success'} onClick={this.CloseGrid.bind(this)}>Close </button>
+                                </div>
+                            </Field>
+                        </Row>
+                        {this.state.LineManager}
                     </div>
                 }
 
@@ -387,9 +417,18 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     }
 
     private _onChange(items: any[]) {
-        this.setState({
-            selectedItems: items
-        });
+        if (items != null && items != undefined) {
+            if (items.length > 0) {
+                var Temp = "amjad.alqawasmi@arabtecuae.com,1946"
+                //items[0]._user.Id
+                //items[0]._user.Description
+                this.setState({
+                    selectedItems: items,
+                    LineManager: Temp
+
+                });
+            }
+        }
         if (this.props.onChange) {
             this.props.onChange(items);
         }
@@ -407,39 +446,14 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
 
 
     private searchPeopleFromMock(): IPersonaProps[] {
-        return this._peopleList = [
-            {
-                imageUrl: './images/persona-female.png',
-                imageInitials: 'PV',
-                primaryText: 'Annie Lindqvist',
-                secondaryText: 'Designer',
-                tertiaryText: 'In a meeting',
-                optionalText: 'Available at 4:00pm'
-            },
-            {
-                imageUrl: './images/persona-male.png',
-                imageInitials: 'AR',
-                primaryText: 'Aaron Reid',
-                secondaryText: 'Designer',
-                tertiaryText: 'In a meeting',
-                optionalText: 'Available at 4:00pm'
-            },
-            {
-                imageUrl: './images/persona-male.png',
-                imageInitials: 'AL',
-                primaryText: 'Alex Lundberg',
-                secondaryText: 'Software Developer',
-                tertiaryText: 'In a meeting',
-                optionalText: 'Available at 4:00pm'
-            },
-            {
-                imageUrl: './images/persona-male.png',
-                imageInitials: 'RK',
-                primaryText: 'Roko Kolar',
-                secondaryText: 'Financial Analyst',
-                tertiaryText: 'In a meeting',
-                optionalText: 'Available at 4:00pm'
-            },
+        return this._peopleList = [{
+            imageUrl: './images/persona-female.png',
+            imageInitials: 'PV',
+            primaryText: 'Annie Lindqvist',
+            secondaryText: 'Designer',
+            tertiaryText: 'In a meeting',
+            optionalText: 'Available at 4:00pm'
+        },
         ];
     }
     private _searchPeople(terms: string, results: IPersonaProps[]): IPersonaProps[] | Promise<IPersonaProps[]> {
@@ -448,7 +462,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             // If the running environment is local, load the data from the mock
             return this.searchPeopleFromMock();
         } else {
-            const userRequestUrl: string = `https://arabtec.sharepoint.com/sites/dev/LMS/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
+            const userRequestUrl: string = `https://arabtec.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
             let principalType: number = 0;
             if (this.props.principalTypeUser === true) {
                 principalType += 1;
@@ -490,7 +504,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                     })
                     .then((persons) => {
                         const batch = this.props.spHttpClient.beginBatch();
-                        const ensureUserUrl = `https://arabtec.sharepoint.com/sites/dev/LMS/_api/web/ensureUser`;
+                        const ensureUserUrl = `https://arabtec.sharepoint.com/_api/web/ensureUser`;
                         const batchPromises: Promise<IEnsureUser>[] = persons.map(p => {
                             var userQuery = JSON.stringify({ logonName: p.User.Key });
                             return batch.post(ensureUserUrl, SPHttpClientBatch.configurations.v1, {
@@ -499,7 +513,6 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                                 .then((response: SPHttpClientResponse) => response.json())
                                 .then((json: IEnsureUser) => json);
                         });
-
                         var User: string = "";
                         var users = batch.execute().then(() => Promise.all(batchPromises).then(values => {
                             values.forEach(v => {
@@ -510,7 +523,6 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                                     userPersona["User"] = user;
                                 }
                             });
-
                             resolve(persons);
                         }));
                     }, (error: any): void => {

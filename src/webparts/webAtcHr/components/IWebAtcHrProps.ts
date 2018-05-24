@@ -1,6 +1,7 @@
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SharePointUserPersona } from '../models/OfficeUiFabricPeoplePicker';
 export interface IWebAtcHrProps {
+  DetailComments:string;
   description: string;
   PassportRequest:number;
   LeaveRequest:number;
