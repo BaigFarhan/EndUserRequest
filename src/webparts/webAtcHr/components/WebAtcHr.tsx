@@ -112,12 +112,15 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             Stage: "",
             EmpEmirates: "NA",
             EmpPassportNumber: "NA",
+            IsFormReadOnly:false,
+
 
         }
         SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
     }
 
     public onSelectDateFrom(event: any): void {
+        
         this.setState({ FromDate: event._d });
     }
     public onSelectDateTo(event: any): void {
@@ -181,8 +184,10 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     public readUrl()
     {
     var url = window.location.href;
+    if (url.lastIndexOf('=')>-1){
     var id = url.substring(url.lastIndexOf('=') + 1);
-    alert(id);
+    this.setState({IsFormReadOnly:true});
+    }
         
     }
     /* Edit Page Dtails ----------------------------------------------- END     */
@@ -346,20 +351,20 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 {this.state.LeaveRequest == 1 && this.state.FormIsEnabled == 1 &&
                     <div className={styles.HeaderGrid}>
                         <GridForm>
-                            <Row>
-                                <Field span={2}>
+                            <Row >
+                                <Field span={2} >
                                     <label>From Date</label>
-                                    <Datetime onChange={this.onSelectDateFrom.bind(this)} />
+                                    <Datetime inputProps={{ disabled:this.state.IsFormReadOnly }}  onChange={this.onSelectDateFrom.bind(this)}  />
                                 </Field>
-                                <Field span={2}>
+                                <Field span={2} >
                                     <label>To Date</label>
-                                    <Datetime onChange={this.onSelectDateTo.bind(this)} />
+                                    <Datetime inputProps={{ disabled: this.state.IsFormReadOnly }} onChange={this.onSelectDateTo.bind(this)} />
                                 </Field>
                             </Row>
                             <Row>
                                 <Field span={4}>
                                     <label>Description</label>
-                                    <input type="text" className={styles.myinput} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
+                                    <input type="text" disabled = {this.state.IsFormReadOnly} className={styles.myinput} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
                                 </Field>
 
                             </Row>
@@ -373,7 +378,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                             <Row>
                                 <Field span={4}>
                                     <label>Description</label>
-                                    <input type="text" className={styles.myinput} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
+                                    <input type="text" className={styles.myinput} disabled = {this.state.IsFormReadOnly} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
                                 </Field>
 
                             </Row>
@@ -387,7 +392,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                         <Row>
                             <Field span={3}>
                                 <label>Manager-To-Approval</label>
-                                <NormalPeoplePicker
+                                <NormalPeoplePicker disabled = {this.state.IsFormReadOnly}
                                     onChange={this._onChange.bind(this)}
                                     onResolveSuggestions={this._onFilterChanged}
                                     getTextFromItem={(persona: IPersonaProps) => persona.primaryText}
@@ -406,7 +411,6 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                                 </div>
                             </Field>
                         </Row>
-                        {this.state.LineManager}
                     </div>
                 }
 

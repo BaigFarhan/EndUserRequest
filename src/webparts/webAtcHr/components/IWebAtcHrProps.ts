@@ -40,5 +40,6 @@ export interface IWebAtcHrProps {
   Stage:string
   EmpEmirates:string;
   EmpPassportNumber:string;
+  IsFormReadOnly:boolean;
   
 }
