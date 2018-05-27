@@ -41,5 +41,7 @@ export interface IWebAtcHrProps {
   EmpEmirates:string;
   EmpPassportNumber:string;
   IsFormReadOnly:boolean;
+  RequestType:string;
+  
   
 }

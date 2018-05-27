@@ -113,6 +113,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             EmpEmirates: "NA",
             EmpPassportNumber: "NA",
             IsFormReadOnly:false,
+            RequestType:"NA",
 
 
         }
@@ -128,7 +129,6 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     }
 
     public updateitems() {
-
         let list = pnp.sp.web.lists.getByTitle("Human Resource");
         list.items.getById(7).update({
             Title: "My New Title44444",
@@ -159,6 +159,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             EmpPassportNumber: this.state.EmpPassportNumber,
             LineManagerId: this.state.selectedItems[0]["_user"]["Id"].toString(),
             LineManagerEmail: this.state.selectedItems[0]["_user"]["Email"],
+            RequestType:this.state.RequestType,
         }).then(r => {
         });
     }
@@ -233,7 +234,8 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                     FormIsEnabled: 1,
                     RequestTypeString: "Leave Request",
                     PassportRequest: 0,
-                    LeaveRequest: 1
+                    LeaveRequest: 1,
+                    RequestType:"Leave Request",
                 })
                 break;
 
@@ -243,6 +245,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                     RequestTypeString: "Passport Request",
                     PassportRequest: 1,
                     LeaveRequest: 0,
+                    RequestType: "Passport Request",
 
                 })
                 break;
@@ -252,6 +255,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Server Request",
+                    RequestType: "Server Request",
                 })
                 break;
 
@@ -260,6 +264,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Sick Request",
+                    RequestType: "Sick Request",
                 })
                 break;
 
@@ -267,6 +272,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Allowance Request",
+                    RequestType: "Allowance Request",
                 })
                 break;
 
@@ -274,6 +280,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "User Request",
+                    RequestType: "User Request",
                 })
                 break;
 
