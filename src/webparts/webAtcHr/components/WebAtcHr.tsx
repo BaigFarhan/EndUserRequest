@@ -112,8 +112,8 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             Stage: "",
             EmpEmirates: "NA",
             EmpPassportNumber: "NA",
-            IsFormReadOnly:false,
-            RequestType:"NA",
+            IsFormReadOnly: false,
+            RequestType: "NA",
 
 
         }
@@ -121,7 +121,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     }
 
     public onSelectDateFrom(event: any): void {
-        
+
         this.setState({ FromDate: event._d });
     }
     public onSelectDateTo(event: any): void {
@@ -159,7 +159,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             EmpPassportNumber: this.state.EmpPassportNumber,
             LineManagerId: this.state.selectedItems[0]["_user"]["Id"].toString(),
             LineManagerEmail: this.state.selectedItems[0]["_user"]["Email"],
-            RequestType:this.state.RequestType,
+            RequestType: this.state.RequestType,
         }).then(r => {
         });
     }
@@ -176,22 +176,60 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
         });
     }
 
-    componentDidMount() {
+    componentDidMount() {        
         this.GetUSerDetails();
         this.readUrl();
 
+
     }
     /* Edit Page Dtails ----------------------------------------------- START     */
-    public readUrl()
+    public readUrl() {
+        var url = window.location.href;
+        if (url.lastIndexOf('=') > -1) {
+            var id = url.substring(url.lastIndexOf('=') + 1);
+            this.setState({ IsFormReadOnly: true,
+                FormIsEnabled:1 });
+            this.fetchitem(id);
+        }
+    }
+    public fetchitem(id)
     {
-    var url = window.location.href;
-    if (url.lastIndexOf('=')>-1){
-    var id = url.substring(url.lastIndexOf('=') + 1);
-    this.setState({IsFormReadOnly:true});
+        var NewISiteUrl = this.props.siteUrl;
+        var NewSiteUrl = NewISiteUrl.replace("/SitePages", "");
+        jquery.ajax({
+            url: `${NewSiteUrl}/_api/web/lists/getbytitle('Human%20Resource')/items?$filter=ID%20eq%20${id}%20&$select=Title,ID,EmpFirstName,EmpNumber,FromDate,ToDate,FromCity,ToCity,StorageCapaity,Status,Stage,EmpEmirates,EmpPassportNumber,ItemsComments,RequestType`,
+            type: "GET",
+            headers: { 'Accept': 'application/json; odata=verbose;' },
+            success: function (resultData) {
+                var myObject = JSON.stringify(resultData.d.results);
+               this.DivSelected(resultData.d.results[0]["RequestType"]);
+               
+               this.setState({
+                   EmployeeName:resultData.d.results[0]["EmpFirstName"],
+                   EmployeeNumber:resultData.d.results[0]["EmpNumber"],
+                   IsFormReadOnly:false,
+                   ToDate:resultData.d.results[0]["ToDate"],
+                   FromDate:resultData.d.results[0]["FromDate"],
+                   DetailComments:resultData.d.results[0]["ItemsComments"],
+                   
+
+               });
+
+               this.setState({
+                IsFormReadOnly:true,
+                
+
+            });
+
+            }.bind(this),
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });   
     }
-        
-    }
+
     /* Edit Page Dtails ----------------------------------------------- END     */
+
+
 
     private GetUSerDetails() {
         var reactHandler = this;
@@ -222,11 +260,6 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             });
     }
 
-
-
-
-
-
     public DivSelected(reqteype) {
         switch (reqteype) {
             case 1:
@@ -235,7 +268,17 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                     RequestTypeString: "Leave Request",
                     PassportRequest: 0,
                     LeaveRequest: 1,
-                    RequestType:"Leave Request",
+                    RequestType: "Leave Request",
+                })
+                break;
+
+                case "Leave Request":
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "Leave Request",
+                    PassportRequest: 0,
+                    LeaveRequest: 1,
+                    RequestType: "Leave Request",
                 })
                 break;
 
@@ -250,8 +293,25 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
+                case "Passport Request":
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "Passport Request",
+                    PassportRequest: 1,
+                    LeaveRequest: 0,
+                    RequestType: "Passport Request",
+
+                })
+                break;
 
             case 3:
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "Server Request",
+                    RequestType: "Server Request",
+                })
+                break;
+             case "Server Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Server Request",
@@ -268,7 +328,23 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
+                case  "Sick Request":
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "Sick Request",
+                    RequestType: "Sick Request",
+                })
+                break;
+
             case 5:
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "Allowance Request",
+                    RequestType: "Allowance Request",
+                })
+                break;
+
+                case "Allowance Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Allowance Request",
@@ -284,6 +360,31 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
+                case"User Request":
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "User Request",
+                    RequestType: "User Request",
+                })
+                break;
+
+                case"Air Ticket Request":
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "Air Ticket",
+                    RequestType: "Air Ticket",
+                })
+                break;
+
+                case 7:
+                this.setState({
+                    FormIsEnabled: 1,
+                    RequestTypeString: "Air Ticket",
+                    RequestType: "Air Ticket",
+                })
+                break;
+
+
 
         }
     }
@@ -293,7 +394,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
         return (
             <div className={styles.webAtcHr} >
                 {
-                    this.state.FormIsEnabled == 0 &&
+                    this.state.FormIsEnabled == 0 && this.state.IsFormReadOnly== false && 
                     <div>
                         <div className={styles.containerLeave} onClick={this.DivSelected.bind(this, 1)}>
 
@@ -334,7 +435,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                         </div>
                     </div>
                 }
-                {this.state.FormIsEnabled == 1 &&
+                {this.state.FormIsEnabled == 1 && 
                     <div className={styles.HeaderGrid}>
 
                         <GridForm>
@@ -361,17 +462,17 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                             <Row >
                                 <Field span={2} >
                                     <label>From Date</label>
-                                    <Datetime inputProps={{ disabled:this.state.IsFormReadOnly }}  onChange={this.onSelectDateFrom.bind(this)}  />
+                                    <Datetime value={this.state.FromDate} inputProps={{ disabled: this.state.IsFormReadOnly }} onChange={this.onSelectDateFrom.bind(this)} />
                                 </Field>
                                 <Field span={2} >
                                     <label>To Date</label>
-                                    <Datetime inputProps={{ disabled: this.state.IsFormReadOnly }} onChange={this.onSelectDateTo.bind(this)} />
+                                    <Datetime value={this.state.ToDate} inputProps={{ disabled: this.state.IsFormReadOnly }} onChange={this.onSelectDateTo.bind(this)} />
                                 </Field>
                             </Row>
                             <Row>
                                 <Field span={4}>
                                     <label>Description</label>
-                                    <input type="text" disabled = {this.state.IsFormReadOnly} className={styles.myinput} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
+                                    <input type="text" disabled={this.state.IsFormReadOnly} className={styles.myinput} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
                                 </Field>
 
                             </Row>
@@ -385,7 +486,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                             <Row>
                                 <Field span={4}>
                                     <label>Description</label>
-                                    <input type="text" className={styles.myinput} disabled = {this.state.IsFormReadOnly} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
+                                    <input type="text" className={styles.myinput} disabled={this.state.IsFormReadOnly} value={this.state.DetailComments} onChange={this.OnChangeDescription.bind(this)} />
                                 </Field>
 
                             </Row>
@@ -399,7 +500,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                         <Row>
                             <Field span={3}>
                                 <label>Manager-To-Approval</label>
-                                <NormalPeoplePicker disabled = {this.state.IsFormReadOnly}
+                                <NormalPeoplePicker 
                                     onChange={this._onChange.bind(this)}
                                     onResolveSuggestions={this._onFilterChanged}
                                     getTextFromItem={(persona: IPersonaProps) => persona.primaryText}
