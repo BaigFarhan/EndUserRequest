@@ -42,6 +42,6 @@ export interface IWebAtcHrProps {
   EmpPassportNumber:string;
   IsFormReadOnly:boolean;
   RequestType:string;
-  
-  
+  SucessFullModal: boolean;
+  ErrorModal: boolean;
 }

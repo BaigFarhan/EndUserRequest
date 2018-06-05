@@ -8,7 +8,9 @@ import { CommandButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { GridForm, Fieldset, Row, Field } from 'react-gridforms'
 import * as Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
+import { Button, Modal } from 'react-bootstrap';
 import { default as pnp, ItemAddResult } from "sp-pnp-js";
+import * as $ from 'jquery';
 
 import {
     CompactPeoplePicker,
@@ -67,6 +69,18 @@ const suggestionProps: IBasePickerSuggestionsProps = {
 
 
 export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
+    protected onInit(): Promise<void> {
+        return new Promise<void>((resolve: () => void, reject: (error?: any) => void): void => {
+            pnp.setup({
+                sp: {
+                    headers: {
+                        "Accept": "application/json; odata=nometadata"
+                    }
+                }
+            });
+            resolve();
+        });
+    }
     private _peopleList;
     private myhtpclient: SPHttpClient;
 
@@ -81,12 +95,12 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             FormIsEnabled: 0,
             RequestTypeString: "",
             spHttpClient: this.props.spHttpClient,
-            siteUrl: "https://arabtec.sharepoint.com",
+            siteUrl: "https://mirzaa.sharepoint.com",
             currentPicker: 1,
             delayResults: true,
             selectedItems: [],
             descriptionpicker: "",
-            siteUrlpicker: "https://arabtec.sharepoint.com",
+            siteUrlpicker: "https://mirzaa.sharepoint.com",
             typePicker: "",
             principalTypeUser: true,
             principalTypeSharePointGroup: true,
@@ -114,7 +128,8 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             EmpPassportNumber: "NA",
             IsFormReadOnly: false,
             RequestType: "NA",
-
+            SucessFullModal: false,
+            ErrorModal: false
 
         }
         SPComponentLoader.loadCss('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css');
@@ -129,7 +144,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     }
 
     public updateitems() {
-        let list = pnp.sp.web.lists.getByTitle("Human Resource");
+        let list = pnp.sp.web.lists.getByTitle("Human%20Resource");
         list.items.getById(7).update({
             Title: "My New Title44444",
             Description: "Here is a new description",
@@ -140,13 +155,17 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
     }
 
     public CreateNewItem(event: any): void {
+
         var dateFormat = require('dateformat');
         var NewISiteUrl = this.props.siteUrl;
         var NewSiteUrl = NewISiteUrl.replace("/SitePages", "");
-        pnp.sp.web.lists.getByTitle("Human Resource").items.add({
+        debugger;
+
+
+        pnp.sp.web.lists.getByTitle("Human%20Resource").items.add({
             Title: "My Item Title",
-            FromDate: this.state.FromDate,
-            ToDate: this.state.ToDate,
+            FromDate: this.state.FromDate == 'NA' ? null : this.state.FromDate,
+            ToDate: this.state.ToDate == 'NA' ? null : this.state.ToDate,
             FromCity: this.state.FromCity,
             ToCity: this.state.ToCity,
             EmpFirstName: this.state.EmployeeName,
@@ -156,15 +175,55 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             StorageCapaity: this.state.StorageCapaity,
             Status: "Pending",
             Stage: "Line Manager",
-            EmpPassportNumber: this.state.EmpPassportNumber,
+            Emp_x0020_PassportNumber: this.state.EmpPassportNumber,
             LineManagerId: this.state.selectedItems[0]["_user"]["Id"].toString(),
             LineManagerEmail: this.state.selectedItems[0]["_user"]["Email"],
             RequestType: this.state.RequestType,
-        }).then(r => {
+        }).then((response) => {
+            this.setState({ SucessFullModal: true });
+            this.setState({ EmployeeManager: "NA" });
+            this.setState({ EmployeeEmail: "NA" });
+            this.setState({ EmpFirstName: "NA" });
+            this.setState({ EmpLastName: "NA" });
+            this.setState({ EmpNumber: "NA" });
+            this.setState({ Description: "NA" });
+            this.setState({ FromDate: "NA" });
+            this.setState({ ToDate: "NA" });
+            this.setState({ FromCity: "NA" });
+            this.setState({ ToCity: "NA" });
+            this.setState({ StorageCapaity: "NA" });
+            this.setState({ LineManager: "" });
+            this.setState({ EmpEmirates: "NA" });
+            this.setState({ EmpPassportNumber: "NA" });
+            this.setState({ selectedItems: [] });
+            this.setState({ DetailComments: '' });
+
+        }).catch(function (data) {
+            this.setState({ ErrorModal: true });
+            // Handle error here
         });
     }
 
-    public CloseGrid(event: any): void {
+
+    CloseGrid(event: any): void {
+
+        this.setState({ EmployeeManager: "NA" });
+        this.setState({ EmployeeEmail: "NA" });
+        this.setState({ EmpFirstName: "NA" });
+        this.setState({ EmpLastName: "NA" });
+        this.setState({ EmpNumber: "NA" });
+        this.setState({ Description: "NA" });
+        this.setState({ FromDate: "NA" });
+        this.setState({ ToDate: "NA" });
+        this.setState({ FromCity: "NA" });
+        this.setState({ ToCity: "NA" });
+        this.setState({ StorageCapaity: "NA" });
+        this.setState({ LineManager: "" });
+        this.setState({ EmpEmirates: "NA" });
+        this.setState({ EmpPassportNumber: "NA" });
+        this.setState({ selectedItems: [] });
+        this.setState({ DetailComments: '' });
+
         this.setState({
             FormIsEnabled: 0
         });
@@ -176,7 +235,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
         });
     }
 
-    componentDidMount() {        
+    componentDidMount() {
         this.GetUSerDetails();
         this.readUrl();
 
@@ -187,13 +246,14 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
         var url = window.location.href;
         if (url.lastIndexOf('=') > -1) {
             var id = url.substring(url.lastIndexOf('=') + 1);
-            this.setState({ IsFormReadOnly: true,
-                FormIsEnabled:1 });
+            this.setState({
+                IsFormReadOnly: true,
+                FormIsEnabled: 1
+            });
             this.fetchitem(id);
         }
     }
-    public fetchitem(id)
-    {
+    public fetchitem(id) {
         var NewISiteUrl = this.props.siteUrl;
         var NewSiteUrl = NewISiteUrl.replace("/SitePages", "");
         jquery.ajax({
@@ -202,29 +262,25 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             headers: { 'Accept': 'application/json; odata=verbose;' },
             success: function (resultData) {
                 var myObject = JSON.stringify(resultData.d.results);
-               this.DivSelected(resultData.d.results[0]["RequestType"]);
-               
-               this.setState({
-                   EmployeeName:resultData.d.results[0]["EmpFirstName"],
-                   EmployeeNumber:resultData.d.results[0]["EmpNumber"],
-                   IsFormReadOnly:false,
-                   ToDate:resultData.d.results[0]["ToDate"],
-                   FromDate:resultData.d.results[0]["FromDate"],
-                   DetailComments:resultData.d.results[0]["ItemsComments"],
-                   
+                this.DivSelected(resultData.d.results[0]["RequestType"]);
 
-               });
+                this.setState({
+                    EmployeeName: resultData.d.results[0]["EmpFirstName"],
+                    EmployeeNumber: resultData.d.results[0]["EmpNumber"],
+                    IsFormReadOnly: false,
+                    ToDate: resultData.d.results[0]["ToDate"],
+                    FromDate: resultData.d.results[0]["FromDate"],
+                    DetailComments: resultData.d.results[0]["ItemsComments"],
+                });
 
-               this.setState({
-                IsFormReadOnly:true,
-                
-
-            });
+                this.setState({
+                    IsFormReadOnly: true,
+                });
 
             }.bind(this),
             error: function (jqXHR, textStatus, errorThrown) {
             }
-        });   
+        });
     }
 
     /* Edit Page Dtails ----------------------------------------------- END     */
@@ -272,7 +328,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
-                case "Leave Request":
+            case "Leave Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Leave Request",
@@ -293,7 +349,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
-                case "Passport Request":
+            case "Passport Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Passport Request",
@@ -311,7 +367,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                     RequestType: "Server Request",
                 })
                 break;
-             case "Server Request":
+            case "Server Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Server Request",
@@ -328,7 +384,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
-                case  "Sick Request":
+            case "Sick Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Sick Request",
@@ -344,7 +400,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
-                case "Allowance Request":
+            case "Allowance Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Allowance Request",
@@ -360,7 +416,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
-                case"User Request":
+            case "User Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "User Request",
@@ -368,7 +424,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
-                case"Air Ticket Request":
+            case "Air Ticket Request":
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Air Ticket",
@@ -376,25 +432,31 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                 })
                 break;
 
-                case 7:
+            case 7:
                 this.setState({
                     FormIsEnabled: 1,
                     RequestTypeString: "Air Ticket",
                     RequestType: "Air Ticket",
                 })
                 break;
-
-
 
         }
     }
 
+    CloseSucessFullModal(e) {
+        this.setState({ SucessFullModal: false });
+        return false;
+    }
+    CloseErrorModal(e) {
+        this.setState({ CloseErrorModal: false });
+        return false;
+    }
 
     public render(): React.ReactElement<IWebAtcHrProps> {
         return (
             <div className={styles.webAtcHr} >
                 {
-                    this.state.FormIsEnabled == 0 && this.state.IsFormReadOnly== false && 
+                    this.state.FormIsEnabled == 0 && this.state.IsFormReadOnly == false &&
                     <div>
                         <div className={styles.containerLeave} onClick={this.DivSelected.bind(this, 1)}>
 
@@ -433,13 +495,18 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                                 <div className={styles.pragraphUser}>User Request</div>
                             </div>
                         </div>
+                        <div className={styles.containerAirTicket} onClick={this.DivSelected.bind(this, 7)}>
+                            <img src="https://img.washingtonpost.com/rw/2010-2019/WashingtonPost/2015/07/30/Production/Sunday/Travel/Images/American_Airlines-0a05c.jpg?uuid=O9fNajbdEeW2cx3wBaD7KA" className={styles.imageUser} />
+                            <div className={styles.overlayAirTicket}>
+                                <div className={styles.pragraphAirTicket}>Air Ticket</div>
+                            </div>
+                        </div>
                     </div>
                 }
-                {this.state.FormIsEnabled == 1 && 
+                {this.state.FormIsEnabled == 1 &&
                     <div className={styles.HeaderGrid}>
 
                         <GridForm>
-
                             <Fieldset legend={this.state.RequestTypeString}>
                                 <Row>
                                     <Field span={3}>
@@ -500,7 +567,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                         <Row>
                             <Field span={3}>
                                 <label>Manager-To-Approval</label>
-                                <NormalPeoplePicker 
+                                <NormalPeoplePicker
                                     onChange={this._onChange.bind(this)}
                                     onResolveSuggestions={this._onFilterChanged}
                                     getTextFromItem={(persona: IPersonaProps) => persona.primaryText}
@@ -515,19 +582,36 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                                 <div className={styles.FooterButtonDiv}>
                                     <button id="btn_add" className={'btn btn-primary'} onClick={this.CreateNewItem.bind(this)}>Create Request </button>
                                     &nbsp;
-                                    <button id="btn_add" className={'btn btn-success'} onClick={this.CloseGrid.bind(this)}>Close </button>
+                                    <button id="btn_close" className={'btn btn-success'} onClick={this.CloseGrid.bind(this)} >Close</button>
                                 </div>
                             </Field>
                         </Row>
                     </div>
+
                 }
-
-
-
+                <Modal show={this.state.SucessFullModal} >
+                    <Modal.Body>
+                        <div className="alert alert-success">
+                            <strong>Success!</strong>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" onClick={this.CloseSucessFullModal.bind(this)} className="btn btn-default" data-dismiss="modal">Close</button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.ErrorModal} >
+                    <Modal.Body>
+                        <div className="alert alert-danger">
+                            <strong>Success!</strong>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" onClick={this.CloseErrorModal.bind(this)} className="btn btn-default" data-dismiss="modal">Close</button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }
-
     private _onChange(items: any[]) {
         if (items != null && items != undefined) {
             if (items.length > 0) {
@@ -574,7 +658,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
             // If the running environment is local, load the data from the mock
             return this.searchPeopleFromMock();
         } else {
-            const userRequestUrl: string = `https://arabtec.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
+            const userRequestUrl: string = `https://mirzaa.sharepoint.com/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
             let principalType: number = 0;
             if (this.props.principalTypeUser === true) {
                 principalType += 1;
@@ -616,7 +700,7 @@ export default class WebAtcHr extends React.Component<IWebAtcHrProps, {}> {
                     })
                     .then((persons) => {
                         const batch = this.props.spHttpClient.beginBatch();
-                        const ensureUserUrl = `https://arabtec.sharepoint.com/_api/web/ensureUser`;
+                        const ensureUserUrl = `https://mirzaa.sharepoint.com/_api/web/ensureUser`;
                         const batchPromises: Promise<IEnsureUser>[] = persons.map(p => {
                             var userQuery = JSON.stringify({ logonName: p.User.Key });
                             return batch.post(ensureUserUrl, SPHttpClientBatch.configurations.v1, {

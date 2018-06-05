@@ -394,7 +394,6 @@ text-align: center;
   width: 232px;
 }
  
-
 .imageUser {
 
   display: block;
@@ -441,6 +440,58 @@ text-align: center;
 
 }
 
+
+.containerAirTicket {
+  margin: 9px;
+  max-width: 700px;
+  background: #316531;
+  color: #fff;
+  font: 3.5em sans-serif;
+  text-align: center;
+  transition: background-color 1s ease-in-out;
+  padding: 7px;
+  float: left;
+  box-shadow: 0 2px 4px 0 #666666, 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  height: 130px;
+  position: relative;
+  width: 232px;
+}
+
+.pragraphAirTicket {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  
+  }
+
+  
+.overlayAirTicket {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background: #53a7ea;
+
+}
+.containerAirTicket:hover .overlayAirTicket {
+  opacity: 1;
+  }
+  
+  .containerAirTicket:hover {
+    background:#53a7ea;
+  }
 
   .pragraph{
     font-size: 15px;
